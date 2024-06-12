@@ -40,11 +40,15 @@
               <tr *ngFor = "let item of lisProductsCart">
                 <td data-label="Product">
                   <a href="/product?id={{item.id_jewelry}}">
-                    <img src="{{item.image_url}}" />
+                    <img src="assets/images/cart1.png" />
                   </a>
                 </td>
                 <td data-label="Name">
-                  <a href="/product?id={{item.id_jewelry}}">{{item.jewelry_title}}</a>
+                  <a href="/product?id={{item.id_jewelry}}">best jewellery collections</a>
+                  <div class="product-option">
+                    <dt>Size:</dt>
+                    <dd>S</dd>
+                  </div>
                 </td>
                 <td data-label="date">11/08/22</td>
                 <td data-label="quantity">
@@ -72,7 +76,7 @@
                 <td><div class="custom-control custom-checkbox" style="text-align: center;">
                   <input class="custom-control-input" type="checkbox" id="{{item.id}}" [(ngModel)]="item.isChecked">
                   <label for="{{item.id}}" class="custom-control-label">select</label>
-                  <a (click)="deleteProductCart(item)" class="remove-btn">
+                  <a href="javascript:;" class="remove-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"
                          focusable="false" role="presentation" class="icon icon-remove">
                       <path
@@ -91,7 +95,29 @@
         </div>
         <div class="col-lg-3 col-12">
           <div class="cart-summery">
-            <button class="btn checkout-btn" (click)="addProductToOrder()">Add to Order</button>
+            <ul>
+              <li>
+                <span class="cart-sum-left">1 item</span>
+                <span class="cart-sum-right">$48.00</span>
+              </li>
+              <li>
+                <span class="cart-sum-left">Shipping</span>
+                <span class="cart-sum-right">$7.00</span>
+              </li>
+              <li>
+                <span class="cart-sum-left">Total (tax excl.)</span>
+                <span class="cart-sum-right"> $55.00</span>
+              </li>
+              <li>
+                <span class="cart-sum-left">Total (tax incl.)</span>
+                <span class="cart-sum-right"> $55.00</span>
+              </li>
+              <li>
+                <span class="cart-sum-left">Taxes: </span>
+                <span class="cart-sum-right"> $0.00</span>
+              </li>
+            </ul>
+            <button class="btn checkout-btn">Proceed to checkout</button>
           </div>
         </div>
       </div>

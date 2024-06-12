@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductDTO } from "../_models/productDTO";
@@ -18,7 +18,7 @@ export class ProductService {
 
 
   constructor(private http: HttpClient, private storageService : StorageService) {
-    this.token = storageService.getUser().access_token;
+    this.token = JSON.parse(localStorage.getItem('user')!)?.accessToken;
     console.log(this.token)
     this.httpOptions = {
     headers: new HttpHeaders({
@@ -32,14 +32,23 @@ export class ProductService {
   public getProducts(request: any): Observable<any>{
     return this.http.post<any[]>(`${this.apiUrl}/jewelry/list`,request, this.httpOptions);
   }
-  public addProduct(Product : any): Observable<any>{
-    return this.http.post<ProductDTO>(`${this.apiUrl}/api/product/addProduct`,Product,this.httpOptions);
+  public getJewelryType():Observable<any>{
+    return this.http.get<any[]>(`${this.apiUrl}/jewelry/jewelry_type`, this.httpOptions);
   }
-  public updateProduct(Product : any): Observable<any>{
-    return this.http.put<ProductDTO>(`${this.apiUrl}/api/product/update`,Product,this.httpOptions);
+  public addProduct(request : any): Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')!)?.accessToken}`,
+    });
+    return this.http.post(`${this.apiUrl}/jewelry/create`,request,{headers})
+  }
+  public updateProduct(request : any): Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')!)?.accessToken}`,
+    });
+    return this.http.post<any>(`${this.apiUrl}/jewelry/update`, request,{headers});
   }
   public deleteProduct(ProductId : number): Observable<any>{
-    return this.http.delete<void>(`${this.apiUrl}/api/product/delete/${ProductId}`,this.httpOptions);
+    return this.http.delete<void>(`${this.apiUrl}/jewelry/delete/${ProductId}`,this.httpOptions);
   }
   public getTest(): Observable<any>{
     return this.http.get<Object>(`${this.apiUrl}/api/product/test`, this.httpOptions);

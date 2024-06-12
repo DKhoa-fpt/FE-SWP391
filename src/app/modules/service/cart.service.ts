@@ -9,9 +9,16 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class CartService {
 
-  public cartItemList : any =[]
+  public cartItemList : any =[];
   public productList = new BehaviorSubject<any>([]);
   public search = new BehaviorSubject<string>("");
+
+  public cartItems = new BehaviorSubject<any[]>(null);
+  cartItems$ = this.cartItems.asObservable();
+  public totalProductInCart = new BehaviorSubject<number>(null);
+  totalProductInCart$ = this.totalProductInCart.asObservable();
+  public totalPrice = new BehaviorSubject<number>(null);
+  totalPrice$ = this.totalPrice.asObservable();
   httpOptions: any;
 
   constructor(private router: Router,
@@ -57,22 +64,34 @@ export class CartService {
     })
     return grandTotal;
   }
-  removeCartItem(product: any){
-    this.cartItemList.map((a:any, index:any)=>{
-      if(product.id=== a.id){
-        this.cartItemList.splice(index,1);
-      }
+  getTotalPriceV2(products: any[]) : number{
+    let grandTotal = 0;
+    products.map((a:any)=>{
+      grandTotal += a.quantity_number*a.price_items;
     })
-    this.productList.next(this.cartItemList);
+    return grandTotal;
+  }
+  getTotalProduct(products: any[]): number {
+    let grandTotal = 0;
+    products.map((a:any)=>{
+      grandTotal += a.quantity_number;
+    })
+    return grandTotal;
+  }
+  removeCartItem(request: any) :Observable<any>{
+    return this.http.post<any[]>(`${environment.apiUrl}/cart/delete`,request,this.httpOptions);
   }
   removeAllCart(){
     this.cartItemList = []
     this.productList.next(this.cartItemList);
   }
-  addToCard(request:any): Observable<any>{
+  addProductToCard(request:any): Observable<any>{
     return this.http.post(`${environment.apiUrl}/cart/add_card`,request,this.httpOptions);
   }
   getProductInCart(request:any): Observable<any>{
     return this.http.post<any[]>(`${environment.apiUrl}/cart/list`,request,this.httpOptions);
+  }
+  updateProductToCard(request:any): Observable<any>{
+    return this.http.post(`${environment.apiUrl}/cart/update`,request,this.httpOptions);
   }
 }

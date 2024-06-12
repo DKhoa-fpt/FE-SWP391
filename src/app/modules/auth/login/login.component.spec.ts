@@ -1,13 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// @ts-ignore
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular-pro';
 import { LoginComponent } from './login.component';
-// @ts-ignore
 import { IconModule } from '@coreui/icons-angular';
-// @ts-ignore
 import { IconSetService } from '@coreui/icons-angular';
-// @ts-ignore
 import { iconSubset } from '../../../core/icons/icon-subset';
 
 describe('LoginComponent', () => {

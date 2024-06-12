@@ -1,7 +1,7 @@
 <div class="cartDrawer">
   <div class="mini-cart-header">
     <h4>My Cart</h4>
-    <div class="cart-tottl-itm">04 Items</div>
+    <div *ngIf="totalProduct" class="cart-tottl-itm">{{totalProduct}} sản phẩm</div>
     <a href="#" class="closecart">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path
@@ -11,28 +11,28 @@
     </a>
   </div>
   <div id="cart-body" class="mini-cart-has-item">
-    <div class="mini-cart-body">
-      <div class="mini-cart-item">
+    <div class="mini-cart-body" *ngIf="lisProductsCart != null">
+      <div class="mini-cart-item" *ngFor = "let item of lisProductsCart">
         <div class="mini-cart-image">
-          <a href="#" title="SPACE BAG">
-            <img src="assets/images/cart1.png" alt="img" />
+          <a href="/product?id={{item.id_jewelry}}" title="SPACE BAG">
+            <img src="{{item.image_url}}" alt="img" />
           </a>
         </div>
         <div class="mini-cart-details">
-          <p class="mini-cart-title"><a href="#">Classic Ring</a></p>
-          <div class="cart-variable">
-            <p><strong>Color:</strong> Purple</p>
-            <p><strong>Size:</strong> S</p>
-          </div>
+          <p class="mini-cart-title"><a href="/product?id={{item.id_jewelry}}">{{item.jewelry_title}}</a></p>
+<!--          <div class="cart-variable">-->
+<!--            <p><strong>Color:</strong> Purple</p>-->
+<!--            <p><strong>Size:</strong> S</p>-->
+<!--          </div>-->
           <div class="qty-spinner">
-            <button type="button" class="quantity-decrement">
+            <button type="button" class="quantity-decrement" (click)="addProductCart(item,-1)">
               <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 0.251343V1.74871H12V0.251343H0Z" fill="#61AFB3"></path>
               </svg>
             </button>
-            <input type="text" class="quantity" data-cke-saved-name="quantity" name="quantity" value="01"
+            <input type="text" class="quantity" data-cke-saved-name="quantity" value="{{item.quantity_number}}"
                    min="01" max="100" />
-            <button type="button" class="quantity-increment">
+            <button type="button" class="quantity-increment" (click)="addProductCart(item,1)">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M6.74868 5.25132V0H5.25132V5.25132H0V6.74868H5.25132V12H6.74868V6.74868H12V5.25132H6.74868Z"
@@ -42,9 +42,9 @@
           </div>
           <div class="pvarprice d-flex align-items-center justify-content-between">
             <div class="price">
-              <ins>69 <span class="currency-type">USD</span></ins><del>$89</del>
+              <ins>{{convertNumber(item.price_items)}} <span class="currency-type">VND</span></ins><del>{{convertNumber(item.price_items)}}</del>
             </div>
-            <a class="remove_item" title="Remove item" href="#">
+            <a class="remove_item" title="Remove item" (click)="deleteProductCart(item)">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path
                   d="M12.7589 7.24609C12.5002 7.24609 12.2905 7.45577 12.2905 7.71448V16.5669C12.2905 16.8255 12.5002 17.0353 12.7589 17.0353C13.0176 17.0353 13.2273 16.8255 13.2273 16.5669V7.71448C13.2273 7.45577 13.0176 7.24609 12.7589 7.24609Z"
@@ -70,12 +70,12 @@
       </div>
     </div>
     <div class="mini-cart-footer">
-      <div class="mini-cart-footer-total-row d-flex align-items-center justify-content-between">
+      <div *ngIf="lisProductsCart != null" class="mini-cart-footer-total-row d-flex align-items-center justify-content-between">
         <div class="mini-total-lbl">Subtotal :</div>
-        <div class="mini-total-price">$207.00</div>
+        <div class="mini-total-price">{{convertNumber(totalPriceProduct)}} VNĐ</div>
       </div>
-      <div class="u-save d-flex justify-end">You Save: $60.00</div>
-      <button class="btn checkout-btn">
+      <div *ngIf="lisProductsCart != null" class="u-save d-flex justify-end">You Save: $60.00</div>
+      <button *ngIf="lisProductsCart != null" class="btn checkout-btn" (click)="goToCart()">
         Proceed to checkout
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path
@@ -95,7 +95,7 @@
           <path d="M25.0749 14L35 7L25.0805 0L29.12 6.06667H0V7.93333H29.12L25.0749 14Z"></path>
         </svg>
       </a>
-      <p class="emptyCart text-center" style="display: none">
+      <p class="emptyCart text-center" *ngIf="lisProductsCart == null">
         You have no items in your shopping cart.
       </p>
     </div>

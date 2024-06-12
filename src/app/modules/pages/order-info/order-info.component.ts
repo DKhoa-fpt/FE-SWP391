@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../service/product.service";
 import {ToastrService} from "ngx-toastr";
 import {NumberService} from "../../service/number.service";
 import {AccountService} from "../../auth/services/account.service";
 import {CartService} from "../../service/cart.service";
-import {Subscription} from "rxjs";
-import {OrderService} from "../../service/order.service";
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: 'app-order-info',
+  templateUrl: './order-info.component.html',
+  styleUrls: ['./order-info.component.css']
 })
-export class CartComponent implements OnInit{
+export class OrderInfoComponent implements OnInit{
   isSelectAll:boolean = false;
   lisProductsCart : any[];
   subscription: Subscription;
@@ -28,8 +27,7 @@ export class CartComponent implements OnInit{
               private toastrService: ToastrService,
               private numberFormat: NumberService,
               private accountServie: AccountService,
-              private cartService: CartService,
-              private orderService: OrderService) {
+              private cartService: CartService) {
   }
   ngOnInit(): void {
     this.isLoginUser = localStorage.getItem("user") != null;
@@ -56,6 +54,7 @@ export class CartComponent implements OnInit{
     })
   }
   clickSelectAll() {
+    console.log(this.isSelectAll);
     const listCopy = this.lisProductsCart.map( value => {
       if(!this.isSelectAll){
         value.isChecked = true;
@@ -84,45 +83,6 @@ export class CartComponent implements OnInit{
   }
   convertNumber(number){
     return this.numberFormat.convertNumber(number);
-  }
-
-  deleteProductCart(product:any) {
-    if(!this.isLoginUser) {
-      this.toastrService.error("Bạn phải đăng nhập trước");
-      return;
-    }
-    const request = {
-      cart_id : product?.id,
-    }
-    this.cartService.removeCartItem(request).subscribe((res) =>{
-      this.toastrService.success("Delete product success");
-      this.getProductCart();
-    }, error => {
-      this.toastrService.error("Update sản phầm thất bại");
-    });
-  }
-  addProductToOrder() {
-    const listSelectCart = this.lisProductsCart.filter(item => item.isChecked == true);
-    if (listSelectCart.length < 1){
-      return this.toastrService.error("No item select in Cart");
-    }
-    const idsCart = listSelectCart.map(item => {
-      return item.id;
-    })
-
-    const request = {
-      cart_ids : idsCart
-    }
-    console.log(listSelectCart);
-    console.log(idsCart);
-    this.orderService.addOrder(request).subscribe((res) =>{
-      this.toastrService.success("Create Order success");
-      const returnUrl = this.route.snapshot.queryParams['/order-list'] || '/order-list';
-      this.router.navigateByUrl(returnUrl).then(r =>{});
-    }, error => {
-      this.toastrService.error("Create order fail !!!");
-    })
-
   }
 
 }
