@@ -2,7 +2,107 @@
 <!--
   - #HEADER
 -->
-<app-header [enableSearch] = true></app-header>
+<header class="header" data-header>
+  <div class="container">
+
+    <div class="overlay" data-overlay></div>
+
+    <div class="header-search">
+      <input type="search" name="search" placeholder="Search Product..." class="input-field">
+
+      <button class="search-btn" aria-label="Search">
+<!--        <ion-icon name="search-outline"></ion-icon>-->
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <a href="#" class="logo">
+      <img src="./assets/images/logo.svg" alt="Casmart logo" width="130" height="31">
+    </a>
+
+    <div class="header-actions">
+
+      <button class="header-action-btn" (click)="redirectLogin()">
+<!--        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>-->
+        <i class="fas fa-person-booth"></i>
+
+        <p class="header-action-label">Sign in</p>
+                <a [routerLink]="['login-v3']" routerLinkActive="active" ></a>
+
+      </button>
+
+      <button class="header-action-btn">
+<!--        <ion-icon name="search-outline" aria-hidden="true"></ion-icon>-->
+
+        <p class="header-action-label">Search</p>
+      </button>
+
+      <button class="header-action-btn">
+<!--        <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>-->
+
+        <p class="header-action-label">Cart</p>
+
+        <div class="btn-badge green" aria-hidden="true">3</div>
+      </button>
+
+      <button class="header-action-btn">
+<!--        <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>-->
+
+        <p class="header-action-label">Wishlisht</p>
+
+        <div class="btn-badge" aria-hidden="true">2</div>
+      </button>
+
+    </div>
+
+    <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="navbar" data-navbar>
+
+      <div class="navbar-top">
+
+        <a href="#" class="logo">
+          <img src="./assets/images/logo.svg" alt="Casmart logo" width="130" height="31">
+        </a>
+
+        <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+<!--          <ion-icon name="close-outline"></ion-icon>-->
+        </button>
+
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="#home" class="navbar-link">Home</a>
+        </li>
+
+        <li>
+          <a href="#" class="navbar-link">Shop</a>
+        </li>
+
+        <li>
+          <a href="#" class="navbar-link">About</a>
+        </li>
+
+        <li>
+          <a href="#blog" class="navbar-link">Blog</a>
+        </li>
+
+        <li>
+          <a href="#" class="navbar-link">Contact</a>
+        </li>
+
+      </ul>
+
+    </nav>
+
+  </div>
+</header>
 <main>
   <article>
 
@@ -15,7 +115,7 @@
       </div>
       <div class="hero-content">
 
-        <h2 class="hero-subtitle">NATURAL DIAMOND</h2>
+        <p class="hero-subtitle">NATURAL DIAMOND</p>
 
         <h2 class="h1 hero-title">GIA Certified Natural Diamonds</h2>
 
@@ -109,7 +209,7 @@
                    class="w-100">
             </figure>
 
-            <a href="#" class="btn btn-secondary" style="color: black">Sunglass & Eye</a>
+            <a href="#" class="btn btn-secondary">Sunglass & Eye</a>
           </li>
 
           <li class="category-item">
@@ -118,7 +218,7 @@
                    class="w-100">
             </figure>
 
-            <a href="#" class="btn btn-secondary" style="color: black">Active & Outdoor</a>
+            <a href="#" class="btn btn-secondary">Active & Outdoor</a>
           </li>
 
           <li class="category-item">
@@ -127,7 +227,7 @@
                    class="w-100">
             </figure>
 
-            <a href="#" class="btn btn-secondary" style="color: black">Winter Wear</a>
+            <a href="#" class="btn btn-secondary">Winter Wear</a>
           </li>
 
           <li class="category-item">
@@ -136,7 +236,7 @@
                    height="600" class="w-100">
             </figure>
 
-            <a href="#" class="btn btn-secondary" style="color: black">Exclusive Footwear</a>
+            <a href="#" class="btn btn-secondary">Exclusive Footwear</a>
           </li>
 
           <li class="category-item">
@@ -145,7 +245,7 @@
                    class="w-100">
             </figure>
 
-            <a href="#" class="btn btn-secondary" style="color: black">Jewelry</a>
+            <a href="#" class="btn btn-secondary">Jewelry</a>
           </li>
 
           <!--          <li class="category-item">-->
@@ -197,7 +297,7 @@
 
         <ul class="product-list">
 
-          <li *ngFor="let product of listProduct">
+          <li>
             <div class="product-card">
 
               <figure class="card-banner">
@@ -211,18 +311,18 @@
 
                 <div class="card-actions">
 
-                  <button class="card-action-btn" aria-label="Quick view" (click)="goToProductDetail(product.id_jewelry)">
-                    <i class="fas fa-eye"></i>
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
                   </button>
 
                   <button class="card-action-btn cart-btn">
-                    <i class="ion ion-bag"></i>
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
                     <p>Add to Cart</p>
                   </button>
 
                   <button class="card-action-btn" aria-label="Add to Whishlist">
-                    <i class="fas fa-heart"></i>
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
                   </button>
 
                 </div>
@@ -231,13 +331,13 @@
 
               <div class="card-content">
                 <h3 class="h4 card-title">
-                  <a href="#">{{product.name}}</a>
+                  <a href="#">Varsi Leather Bag</a>
                 </h3>
 
                 <div class="card-price">
-                  <data value="48.75">{{convertNumber(product.price)}} VNĐ</data>
+                  <data value="48.75">&pound;4800.75</data>
 
-                  <data value="65.00">{{convertNumber(product.price)}} VNĐ</data>
+                  <data value="65.00">&pound;6500.00</data>
                 </div>
               </div>
 
@@ -259,17 +359,17 @@
                 <div class="card-actions">
 
                   <button class="card-action-btn" aria-label="Quick view">
-                    <i class="fas fa-eye"></i>
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
                   </button>
 
                   <button class="card-action-btn cart-btn">
-                    <i class="ion ion-bag"></i>
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
                     <p>Add to Cart</p>
                   </button>
 
                   <button class="card-action-btn" aria-label="Add to Whishlist">
-                    <i class="fas fa-heart"></i>
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
                   </button>
 
                 </div>
@@ -289,269 +389,269 @@
             </div>
           </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/round_2.jpg" alt="Grand Atlantic Chukka Boots" loading="lazy"-->
-<!--                       width="800" height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/round_2.jpg" alt="Grand Atlantic Chukka Boots" loading="lazy"
+                       width="800" height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Grand Atlantic Chukka Boots</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Grand Atlantic Chukka Boots</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="32.00">&pound;3200.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                <div class="card-price">
+                  <data value="32.00">&pound;3200.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/round_3.jpg" alt="Women's Faux-Trim Shirt" loading="lazy" width="800"-->
-<!--                       height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/round_3.jpg" alt="Women's Faux-Trim Shirt" loading="lazy" width="800"
+                       height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Women's Faux-Trim Shirt</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Women's Faux-Trim Shirt</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="84.00">&pound;8400.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                <div class="card-price">
+                  <data value="84.00">&pound;8400.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/round_4.jpg" alt="Soft Touch Interlock Polo" loading="lazy" width="800"-->
-<!--                       height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/round_4.jpg" alt="Soft Touch Interlock Polo" loading="lazy" width="800"
+                       height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Soft Touch Interlock Polo</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Soft Touch Interlock Polo</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="45.00">&pound;4500.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                <div class="card-price">
+                  <data value="45.00">&pound;4500.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/oval_1.jpg" alt="Casmart Smart Watch" loading="lazy" width="800"-->
-<!--                       height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/oval_1.jpg" alt="Casmart Smart Watch" loading="lazy" width="800"
+                       height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Casmart Smart Watch</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Casmart Smart Watch</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="30.00">&pound;3000.00</data>-->
+                <div class="card-price">
+                  <data value="30.00">&pound;3000.00</data>
 
-<!--                  <data value="38.00">&pound;3800.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                  <data value="38.00">&pound;3800.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/pear_1.jpg" alt="Casmart Smart Glass" loading="lazy" width="800"-->
-<!--                       height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/pear_1.jpg" alt="Casmart Smart Glass" loading="lazy" width="800"
+                       height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Casmart Smart Glass</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Casmart Smart Glass</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="25.00">&pound;2500.00</data>-->
+                <div class="card-price">
+                  <data value="25.00">&pound;2500.00</data>
 
-<!--                  <data value="39.00">&pound;3900.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                  <data value="39.00">&pound;3900.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
-<!--          <li>-->
-<!--            <div class="product-card">-->
+          <li>
+            <div class="product-card">
 
-<!--              <figure class="card-banner">-->
+              <figure class="card-banner">
 
-<!--                <a href="#">-->
-<!--                  <img src="./assets/images/princess_1.jpg" alt="Cotton Shirt for Men" loading="lazy" width="800"-->
-<!--                       height="1034" class="w-100">-->
-<!--                </a>-->
+                <a href="#">
+                  <img src="./assets/images/princess_1.jpg" alt="Cotton Shirt for Men" loading="lazy" width="800"
+                       height="1034" class="w-100">
+                </a>
 
-<!--                <div class="card-actions">-->
+                <div class="card-actions">
 
-<!--                  <button class="card-action-btn" aria-label="Quick view">-->
-<!--                    <i class="fas fa-eye"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Quick view">
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+                  </button>
 
-<!--                  <button class="card-action-btn cart-btn">-->
-<!--                    <i class="ion ion-bag"></i>-->
+                  <button class="card-action-btn cart-btn">
+<!--                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>-->
 
-<!--                    <p>Add to Cart</p>-->
-<!--                  </button>-->
+                    <p>Add to Cart</p>
+                  </button>
 
-<!--                  <button class="card-action-btn" aria-label="Add to Whishlist">-->
-<!--                    <i class="fas fa-heart"></i>-->
-<!--                  </button>-->
+                  <button class="card-action-btn" aria-label="Add to Whishlist">
+<!--                    <ion-icon name="heart-outline"></ion-icon>-->
+                  </button>
 
-<!--                </div>-->
+                </div>
 
-<!--              </figure>-->
+              </figure>
 
-<!--              <div class="card-content">-->
-<!--                <h3 class="h4 card-title">-->
-<!--                  <a href="#">Cotton Shirt for Men</a>-->
-<!--                </h3>-->
+              <div class="card-content">
+                <h3 class="h4 card-title">
+                  <a href="#">Cotton Shirt for Men</a>
+                </h3>
 
-<!--                <div class="card-price">-->
-<!--                  <data value="85.00">&pound;8500.00</data>-->
+                <div class="card-price">
+                  <data value="85.00">&pound;8500.00</data>
 
-<!--                  <data value="99.00">&pound;9900.00</data>-->
-<!--                </div>-->
-<!--              </div>-->
+                  <data value="99.00">&pound;9900.00</data>
+                </div>
+              </div>
 
-<!--            </div>-->
-<!--          </li>-->
+            </div>
+          </li>
 
           <!--          <li>-->
           <!--            <div class="product-card">-->
@@ -793,37 +893,37 @@
       - #NEWSLETTER
     -->
 
-<!--    <section class="section newsletter">-->
-<!--      <div class="container">-->
+    <section class="section newsletter">
+      <div class="container">
 
-<!--        <div class="newsletter-card" style="background-image: url('./assets/images/newsletter-bg.png')">-->
+        <div class="newsletter-card" style="background-image: url('./assets/images/newsletter-bg.png')">
 
-<!--          <h2 class="card-title">Subscribe Newsletter</h2>-->
+          <h2 class="card-title">Subscribe Newsletter</h2>
 
-<!--          <p class="card-text">-->
-<!--            Enter your email below to be the first to know about new collections and product launches.-->
-<!--          </p>-->
+          <p class="card-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
 
-<!--          <form action="" class="card-form">-->
+          <form action="" class="card-form">
 
-<!--            <div class="input-wrapper">-->
-<!--&lt;!&ndash;              <ion-icon name="mail-outline"></ion-icon>&ndash;&gt;-->
+            <div class="input-wrapper">
+<!--              <ion-icon name="mail-outline"></ion-icon>-->
 
-<!--              <input type="email" name="emal" placeholder="Enter your email" required class="input-field">-->
-<!--            </div>-->
+              <input type="email" name="emal" placeholder="Enter your email" required class="input-field">
+            </div>
 
-<!--            <button type="submit" class="btn btn-primary w-100">-->
-<!--              <span>Subscribe</span>-->
+            <button type="submit" class="btn btn-primary w-100">
+              <span>Subscribe</span>
 
-<!--&lt;!&ndash;              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>&ndash;&gt;-->
-<!--            </button>-->
+<!--              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>-->
+            </button>
 
-<!--          </form>-->
+          </form>
 
-<!--        </div>-->
+        </div>
 
-<!--      </div>-->
-<!--    </section>-->
+      </div>
+    </section>
 
   </article>
 </main>
@@ -836,7 +936,7 @@
   - #FOOTER
 -->
 
-<footer class="footer" style="margin-top: 100px">
+<footer class="footer">
 
   <div class="footer-top">
     <div class="container">

@@ -5,51 +5,29 @@ import {DefaultLayoutComponent} from './core/default-layout/default-layout.compo
 import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {LoginComponent} from './modules/auth/login/login.component';
 import {RegisterComponent} from './modules/auth/register/register.component';
-// import {ResetPasswordComponent} from './modules/auth/reset-password/reset-password.component';
+import {ResetPasswordComponent} from './modules/auth/reset-password/reset-password.component';
 import {HomeComponent} from "./modules/home/home.component";
 import {LoginV3Component} from "./modules/login-v3/login-v3.component";
 import {IntroductionComponent} from "./modules/default-page/introduction/introduction.component";
 import {PriceDimondTableComponent} from "./modules/default-page/price-dimond-table/price-dimond-table.component";
 import {MeasureJewelrySizeComponent} from "./modules/default-page/measure-jewelry-size/measure-jewelry-size.component";
 import {AddProductComponent} from "./modules/add-product/add-product.component";
-import {UserProfileComponent} from "./modules/user-profile/user-profile.component";
-import {FileUploadComponent} from "./modules/file-upload/file-upload.component";
-import {HomePageComponent} from "./modules/pages/home-page/home-page.component";
-import {AboutComponent} from "./modules/pages/about/about.component";
-import {ArticleComponent} from "./modules/pages/article/article.component";
-import {BlogComponent} from "./modules/pages/blog/blog.component";
-import {CartComponent} from "./modules/pages/cart/cart.component";
-import {CheckoutComponent} from "./modules/pages/checkout/checkout.component";
-import {ContactUsComponent} from "./modules/pages/contact-us/contact-us.component";
-import {FaqsComponent} from "./modules/pages/faqs/faqs.component";
-import {MyLoginComponent} from "./modules/pages/my-login/my-login.component";
-import {MyAccountComponent} from "./modules/pages/my-account/my-account.component";
-import {OrderSummeryComponent} from "./modules/pages/order-summery/order-summery.component";
-import {PrivacyPolicyComponent} from "./modules/pages/privacy-policy/privacy-policy.component";
-import {ProductListComponent} from "./modules/pages/product-list/product-list.component";
-import {ProductComponent} from "./modules/pages/product/product.component";
-import {RegisterPageComponent} from "./modules/pages/register-page/register-page.component";
-import {WishListComponent} from "./modules/pages/wish-list/wish-list.component";
-import {ResetPasswordComponent} from "./modules/pages/reset-password/reset-password.component";
-import {ForgetPasswordComponent} from "./modules/pages/forget-password/forget-password.component";
-import {OrderListComponent} from "./modules/pages/order-list/order-list.component";
-import {BillResultComponent} from "./modules/pages/bill-result/bill-result.component";
-import {LoginSuccessComponent} from "./modules/pages/login-success/login-success.component";
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // },
   {
     path: '',
-    redirectTo: '/home-page',
-    pathMatch: 'full'
-  },
-  {
-    path: 'admin',
     component: DefaultLayoutComponent,
     // canActivate: [authGuard],
     data: {
       title: 'Home'
     },
     children: [
+      {path: 'users', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)},
       {
         path: 'widgets',
         loadChildren: () =>
@@ -202,7 +180,6 @@ const routes: Routes = [
 
     ]
   },
-  {path: 'users', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)},
   {
     path: 'ecommerce',
     loadChildren: () => import('./modules/common/pages/ecommerce/ecommerce.module').then(m => m.EcommerceModule)
@@ -266,137 +243,11 @@ const routes: Routes = [
       title: 'Measure Jewelry Size Page'
     }
   },
-    {
+  {
     path: 'add-product',
     component: AddProductComponent,
     data: {
-      title: 'Add Product Page'
-    }
-  },
-  {
-    path: 'user-profile',
-    component: UserProfileComponent,
-    data: {
-      title: 'User Profile Page'
-    }
-  },
-  {
-    path: 'upload-avatar',
-    component: FileUploadComponent,
-    data: {
-      title: 'Upload File Page'
-    }
-  },
-  {
-    path: 'home-page',
-    component: HomePageComponent,
-    data: {
-      title: 'Home Page'
-    }
-  },
-  {
-    path: 'about',
-    component: AboutComponent,
-    data: {
-      title: 'About Page'
-    }
-  },
-  {
-    path: 'article',
-    component: ArticleComponent,
-    data: {
-      title: 'Article Page'
-    }
-  },
-  {
-    path: 'blog',
-    component: BlogComponent,
-    data: {
-      title: 'Blog Page'
-    }
-  },
-  {
-    path: 'cart',
-    component: CartComponent,
-    data: {
-      title: 'Cart Page'
-    }
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    data: {
-      title: 'Cart Page'
-    }
-  },
-  {
-    path: 'contact-us-v2',
-    component: ContactUsComponent,
-    data: {
-      title: 'Contact us Page'
-    }
-  },
-  {
-    path: 'faqs',
-    component: FaqsComponent,
-    data: {
-      title: 'Fags Page'
-    }
-  },
-  {
-    path: 'my-login',
-    component: MyLoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  },
-  {
-    path: 'my-account',
-    component: MyAccountComponent,
-    data: {
-      title: 'My account Page'
-    }
-  },
-  {
-    path: 'order-summery',
-    component: OrderSummeryComponent,
-    data: {
-      title: 'Order Summery Page'
-    }
-  },
-  {
-    path: 'privacy-policy',
-    component: PrivacyPolicyComponent,
-    data: {
-      title: 'Privacy Policy Page'
-    }
-  },
-  {
-    path: 'product-list',
-    component: ProductListComponent,
-    data: {
-      title: 'Product List Page'
-    }
-  },
-  {
-    path: 'product',
-    component: ProductComponent,
-    data: {
-      title: 'Product Page'
-    }
-  },
-  {
-    path: 'register-page',
-    component: RegisterPageComponent,
-    data: {
-      title: 'Register Page'
-    }
-  },
-  {
-    path: 'wish-list',
-    component: WishListComponent,
-    data: {
-      title: 'Wish List Page'
+      title: 'Introduction Page'
     }
   },
   {
@@ -406,35 +257,7 @@ const routes: Routes = [
       title: 'Reset Password Page'
     }
   },
-  {
-    path: 'forget-password',
-    component: ForgetPasswordComponent,
-    data: {
-      title: 'Forget Password Page'
-    }
-  },
-  {
-    path: 'order-list',
-    component: OrderListComponent,
-    data: {
-      title: 'List Order Page'
-    }
-  },
-  {
-    path: 'bill-result',
-    component: BillResultComponent,
-    data: {
-      title: 'Bill result Page'
-    }
-  },
-  {
-    path: 'login-success',
-    component: LoginSuccessComponent,
-    data: {
-      title: 'Login success Page'
-    }
-  },
-  {path: '**', redirectTo: 'home-page'}
+  {path: '**', redirectTo: 'dashboard'}
 ];
 
 @NgModule({

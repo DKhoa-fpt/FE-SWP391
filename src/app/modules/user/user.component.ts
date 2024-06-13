@@ -7,8 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { UsersService } from './users.service';
 import { ConfirmationComponent } from 'src/app/core/shared/components/confirmation/confirmation.component';
 import Swal from 'sweetalert2'
-import {AccountService} from "../auth/services/account.service";
-import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user',
@@ -50,9 +48,7 @@ export class UserComponent implements OnInit {
     private socket: SocketService,
     private http: HttpClient,
     private usersService: UsersService,
-    private viewContainer: ViewContainerRef,
-    private accountService : AccountService,
-    private toastrService: ToastrService,
+    private viewContainer: ViewContainerRef
     ) {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
   }
@@ -64,63 +60,50 @@ export class UserComponent implements OnInit {
   }
 
   async getUserList() {
-    this.accountService.getAllUser().subscribe((res) => {
-      this.allUsers = res?.data;
-    }, error => {
-      this.toastrService.error("lỗi không lấy được users");
-    });
-
-    // this.allUsers = [
-    //   {
-    //     user_id: '1',
-    //     email:'john@gmail.com',
-    //     password:'123456',
-    //     phone:'+92301789658',
-    //     gender:'male',
-    //     country:'Pakistan',
-    //     userStatus:1,
-    //     loginStatus:0,
-    //     username:'john doe'
-    //   },
-    //   {
-    //     user_id: '2',
-    //     email:'suzan@gmail.com',
-    //     password:'123456',
-    //     phone:'+92693569314',
-    //     country:'Pakistan',
-    //     gender:'male',
-    //     userStatus:1,
-    //     loginStatus:0,
-    //     username:'Suzan Miler'
-    //   }
-    // ];
+    this.allUsers = [
+      {
+        user_id: '1',
+        email:'john@gmail.com',
+        password:'123456',
+        phone:'+92301789658',
+        gender:'male',
+        country:'Pakistan',
+        userStatus:1,
+        loginStatus:0,
+        username:'john doe'
+      },
+      {
+        user_id: '2',
+        email:'suzan@gmail.com',
+        password:'123456',
+        phone:'+92693569314',
+        country:'Pakistan',
+        gender:'male',
+        userStatus:1,
+        loginStatus:0,
+        username:'Suzan Miler'
+      }
+    ];
   }
   getUserRoleList() {
     this.userRoles = [
       {
         id:1,
-        roleName:'ADMIN'
+        roleName:'Super Admin'
       },
       {
         id:2,
-        roleName:'END_USER'
-      },
-      {
-        id:3,
-        roleName:'MANAGER'
-      },
-      {
-        id:4,
-        roleName:'SALE'
+        roleName:'Company Admin'
       }
     ]
   }
   setForm() {
+    debugger
     this.userForm = new FormGroup({
       user_id: new FormControl(null),
       roleId: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
-      full_name: new FormControl(null, [Validators.required]),
+      username: new FormControl(null, [Validators.required]),
       userStatus: new FormControl(),
       loginStatus: new FormControl(),
       gender: new FormControl(),
@@ -159,7 +142,7 @@ export class UserComponent implements OnInit {
     formData.append('email', this.userForm.value.email);
     formData.append('password', this.userForm.value.password);
     formData.append('password_confirmation', this.userForm.value.password_confirmation);
-    formData.append('full_name', this.userForm.value.full_name);
+    formData.append('username', this.userForm.value.username);
     formData.append('phone', this.userForm.value.phone);
     formData.append('userImage', this.userForm.value.userImage);
     this.userForm.reset();
@@ -209,7 +192,7 @@ export class UserComponent implements OnInit {
     formData.append('companyId', 1);
     formData.append('roleId', this.userForm.value.roleId);
     formData.append('email', this.userForm.value.email);
-    formData.append('full_name', this.userForm.value.full_name);
+    formData.append('username', this.userForm.value.username);
     formData.append('phone', this.userForm.value.phone);
     formData.append('userImage', this.userForm.value.userImage);
     formData.append('userStatus', this.userForm.value.userStatus);

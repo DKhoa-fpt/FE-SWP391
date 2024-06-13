@@ -66,12 +66,11 @@ export class LoginV3Component {
       .subscribe({
         next: () => {
           this.toastrService.success("login sucescss");
-          const returnUrl = this.route.snapshot.queryParams['/home-page'] || '/home-page';
-          this.router.navigateByUrl(returnUrl).then(r =>{});
+          const returnUrl = this.route.snapshot.queryParams['/'] || '/';
+          this.router.navigateByUrl(returnUrl);
         },
         error: error => {
-          console.log(error);
-          this.toastrService.error(error.error?.error);
+          this.toastrService.error("login error");
           console.log("login error");
           this.loading = false;
         }

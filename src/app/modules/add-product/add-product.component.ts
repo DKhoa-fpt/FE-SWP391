@@ -6,13 +6,7 @@ import { HelperService } from "../service/helper.service";
 import { ProductService } from "../service/product.service";
 import { StorageService } from "../service/storage.service";
 import { Router } from '@angular/router';
-import {ToastrService} from "ngx-toastr";
-class ImageSnippet {
-  pending: boolean = false;
-  status: string = 'init';
 
-  constructor(public src: string, public file: File) {}
-}
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -22,59 +16,35 @@ export class AddProductComponent {
   public Products: any[] = [];
   public editProduct!: any;
   public deleteProduct!: any;
-  selectedFile: ImageSnippet;
-  public jewelryTypes : any[] = [];
 
-  constructor(private helperService: HelperService,
-              private ProductService: ProductService,
-              private storageService: StorageService,
-              private router: Router,
-              private toastrService: ToastrService) {
-  }
+  constructor(private helperService: HelperService,private ProductService: ProductService,private storageService: StorageService,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.getProducts();
-    this.getJewelryTypes();
+    this.getProducts()
     throw new Error('Method not implemented.');
   }
   public getProducts(): void{
-    let request = {
-      jewelry_type_id:'',
-      limit:1000,
-      offset:0,
-      requestId:''
-    }
-    this.ProductService.getProducts(request).subscribe(
-      (response:any) =>{
-        this.Products = response.data;
+    this.ProductService.getProducts().subscribe(
+      (response:ProductDTO[]) =>{
+        this.Products = response;
       },
       (error: HttpErrorResponse)=>{alert(error.message);}
     );
   }
   public onAddProduct(addForm: NgForm): void {
-    const formData: FormData = new FormData();
-    if(this.selectedFile) {
-      formData.append('image',this.selectedFile.file);
-      formData.append('request',new Blob([JSON.stringify(addForm.value)], {
-        type: 'application/json',
-      }));
-      document.getElementById('add-Product-form')!.click();
-      this.ProductService.addProduct(formData).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.toastrService.success("Add product success")
-          this.getProducts();
-          addForm.reset();
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-          addForm.reset();
-          this.selectedFile.file = null;
-        }
-      );
-    } else {
-      this.toastrService.error(" Không được để trống ảnh");
-    }
+    document.getElementById('add-Product-form')!.click();
+    this.ProductService.addProduct(addForm.value).subscribe(
+      (response: ProductDTO) => {
+        console.log(response);
+        this.getProducts();
+        addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        addForm.reset();
+      }
+    );
   }
   public logoutPage():void{
     this.storageService.clean();
@@ -82,28 +52,19 @@ export class AddProductComponent {
 
   }
 
-  public onUpdateProduct(product: any): void {
-    const formData: FormData = new FormData();
-    console.log(this.selectedFile);
-    if(this.selectedFile != undefined) {
-      formData.append('image',this.selectedFile?.file!=undefined ?this.selectedFile.file:null);
-    }
-      formData.append('request',new Blob([JSON.stringify(product)], {
-        type: 'application/json',
-      }));
-      this.ProductService.updateProduct(formData).subscribe(
-        (response: any) => {
-          this.toastrService.success("Update product success")
-          this.getProducts();
-          this.selectedFile.file = null;
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      );
+  public onUpdateProduct(Product: ProductDTO): void {
+    this.ProductService.updateProduct(Product).subscribe(
+      (response: ProductDTO) => {
+        console.log(response);
+        this.getProducts();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
-  public onDeleteProduct(ProductId: any): void {
+  public onDeleteEmloyee(ProductId: any): void {
     if(ProductId !== undefined){
       ProductId = Number(ProductId);
       this.ProductService.deleteProduct(ProductId).subscribe(
@@ -160,34 +121,4 @@ export class AddProductComponent {
     button.click();
   }
 
-  processFile(imageInput: any) {
-    console.log(imageInput.files[0]);
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener('load', (event: any) => {
-
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      // this.imageService.uploadImage(this.selectedFile.file).subscribe(
-      //   (res) => {
-      //
-      //   },
-      //   (err) => {
-      //
-      //   })
-    });
-
-    reader.readAsDataURL(file);
-  }
-
-  private getJewelryTypes() {
-    this.ProductService.getJewelryType().subscribe((res) =>{
-      this.jewelryTypes = [...res.data];
-      console.log(this.jewelryTypes);
-    },error => {
-      this.toastrService.error("Error get Type")
-    })
-
-  }
 }

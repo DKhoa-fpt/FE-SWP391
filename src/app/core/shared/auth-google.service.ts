@@ -15,17 +15,17 @@ export class AuthGoogleService {
       issuer: 'https://accounts.google.com',
       strictDiscoveryDocumentValidation: false,
       clientId: '872531465200-phv9i3mh1h7vu01dtq1erpvld7s06vrd.apps.googleusercontent.com',
-      redirectUri: window.location.origin + '/login-success',
+      redirectUri: window.location.origin + '/home',
       scope: 'openid profile email',
     }
 
     this.oauthService.configure(config);
     this.oauthService.setupAutomaticSilentRefresh();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(r => {});
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
   login() {
-    this.oauthService.initImplicitFlow();
+    this.oauthService.initLoginFlow();
     // const data = JSON.stringify(this.oauthService.getIdentityClaims());
     // console.log(this.oauthService.getIdentityClaims());
   }
@@ -39,9 +39,6 @@ export class AuthGoogleService {
   }
   getToken() {
     return this.oauthService.getAccessToken();
-  }
-  getIdToken() {
-    return this.oauthService.getIdToken();
   }
   revokeTokenAndLogout(){
     this.oauthService.revokeTokenAndLogout();

@@ -1,39 +1,16 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {ActivatedRoute, Router} from "@angular/router";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  public cartItemList : any =[];
+  public cartItemList : any =[]
   public productList = new BehaviorSubject<any>([]);
   public search = new BehaviorSubject<string>("");
 
-  public cartItems = new BehaviorSubject<any[]>(null);
-  cartItems$ = this.cartItems.asObservable();
-  public totalProductInCart = new BehaviorSubject<number>(null);
-  totalProductInCart$ = this.totalProductInCart.asObservable();
-  public totalPrice = new BehaviorSubject<number>(null);
-  totalPrice$ = this.totalPrice.asObservable();
-  httpOptions: any;
-
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private http: HttpClient,) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${JSON.parse(localStorage.getItem('user')!)?.accessToken}`,
-      }),
-      "Access-Control-Allow-Origin": `${environment.apiUrl}`,
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-
-    };
-  }
+  constructor() { }
   getProducts(){
     return this.productList.asObservable();
   }
@@ -64,34 +41,16 @@ export class CartService {
     })
     return grandTotal;
   }
-  getTotalPriceV2(products: any[]) : number{
-    let grandTotal = 0;
-    products.map((a:any)=>{
-      grandTotal += a.quantity_number*a.price_items;
+  removeCartItem(product: any){
+    this.cartItemList.map((a:any, index:any)=>{
+      if(product.id=== a.id){
+        this.cartItemList.splice(index,1);
+      }
     })
-    return grandTotal;
-  }
-  getTotalProduct(products: any[]): number {
-    let grandTotal = 0;
-    products.map((a:any)=>{
-      grandTotal += a.quantity_number;
-    })
-    return grandTotal;
-  }
-  removeCartItem(request: any) :Observable<any>{
-    return this.http.post<any[]>(`${environment.apiUrl}/cart/delete`,request,this.httpOptions);
+    this.productList.next(this.cartItemList);
   }
   removeAllCart(){
     this.cartItemList = []
     this.productList.next(this.cartItemList);
-  }
-  addProductToCard(request:any): Observable<any>{
-    return this.http.post(`${environment.apiUrl}/cart/add_card`,request,this.httpOptions);
-  }
-  getProductInCart(request:any): Observable<any>{
-    return this.http.post<any[]>(`${environment.apiUrl}/cart/list`,request,this.httpOptions);
-  }
-  updateProductToCard(request:any): Observable<any>{
-    return this.http.post(`${environment.apiUrl}/cart/update`,request,this.httpOptions);
   }
 }
