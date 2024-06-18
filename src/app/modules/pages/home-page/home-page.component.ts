@@ -18,29 +18,36 @@ export class HomePageComponent {
   rings: any[]
   famousRing : any
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private productService: ProductService,
-              private toastrService: ToastrService,
-              private numberFormat: NumberService,
-              private accountServie: AccountService,
-              private googleService :AuthGoogleService,
-              private cartService: CartService) {
-    if(googleService.getIdToken()){
-      const body = {token:googleService.getIdToken()}
-      accountServie.loginWithGoogle(body).subscribe((res) =>{
-        console.log(res);
-        localStorage.setItem("user",JSON.stringify(res))
-      },error => {
-
-      });
-    }
+  constructor(
+    private googleService: AuthGoogleService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductService,
+    private toastrService: ToastrService,
+    private numberFormat: NumberService,
+    private accountServie: AccountService,
+    private cartService: CartService) {
   }
 
   ngOnInit(): void {
-    this.isLoginUser = localStorage.getItem("user") != null;
+    if(this.googleService.getIdToken() || localStorage.getItem("loginWithGoogle")){
+      if(localStorage.getItem("loginWithGoogle")){
+        localStorage.removeItem("loginWithGoogle");
+        location.reload();
+      }
+      const body = {token:this.googleService.getIdToken()}
+      this.accountServie.loginWithGoogle(body).subscribe((res) =>{
+        this.accountServie.userSubject.next(res);
+        localStorage.setItem("user",JSON.stringify(res))
+        this.getProductCartV2(res.accessToken);
+        this.isLoginUser = true;
+      },error => {
+
+      });
+    } else {
+      this.isLoginUser = localStorage.getItem("user") != null;
+    }
     this.getProducts();
-    console.log(localStorage.getItem("user"),this.isLoginUser);
   }
 
   redirectLogin() {
@@ -57,7 +64,6 @@ export class HomePageComponent {
     return this.numberFormat.convertNumber(number);
   }
   goToProductDetail(id:number) {
-    console.log(id);
     const returnUrl = this.route.snapshot.queryParams[`/ecommerce?id=${id}`] || `/ecommerce?id=${id}`;
     this.router.navigateByUrl(returnUrl);
   }
@@ -97,6 +103,18 @@ export class HomePageComponent {
       customer_id : 1
     }
     this.cartService.getProductInCart(request).subscribe((res) =>{
+      this.cartService.cartItems.next(res?.data);
+      this.cartService.totalProductInCart.next(this.cartService.getTotalProduct(res?.data));
+      this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
+    }, error => {
+
+    })
+  }
+  getProductCartV2(token:any) {
+    const request = {
+      customer_id : 1
+    }
+    this.cartService.getProductInCartV2(request,token).subscribe((res) =>{
       this.cartService.cartItems.next(res?.data);
       this.cartService.totalProductInCart.next(this.cartService.getTotalProduct(res?.data));
       this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
