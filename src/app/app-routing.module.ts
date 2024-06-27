@@ -35,6 +35,10 @@ import {ForgetPasswordComponent} from "./modules/auth/forget-password/forget-pas
 import {OrderListComponent} from "./modules/pages/order-list/order-list.component";
 import {BillResultComponent} from "./modules/pages/bill-result/bill-result.component";
 import {LoginSuccessComponent} from "./modules/auth/login-success/login-success.component";
+import {OrderInfoComponent} from "./modules/pages/order-info/order-info.component";
+import {
+  HuongDanDoSizeNhanComponent
+} from "./modules/default-page/huong-dan-do-size-nhan/huong-dan-do-size-nhan.component";
 
 const routes: Routes = [
   {
@@ -266,6 +270,13 @@ const routes: Routes = [
       title: 'Measure Jewelry Size Page'
     }
   },
+  {
+    path: 'huong-dan-do-size-nhan',
+    component: HuongDanDoSizeNhanComponent,
+    data: {
+      title: 'Measure Jewelry Size Ring Page'
+    }
+  },
     {
     path: 'add-product',
     component: AddProductComponent,
@@ -432,6 +443,13 @@ const routes: Routes = [
     component: LoginSuccessComponent,
     data: {
       title: 'Login success Page'
+    }
+  },
+  {
+    path: 'order-info',
+    component: OrderInfoComponent,
+    data: {
+      title: 'Order info Page'
     }
   },
   {path: '**', redirectTo: 'home-page'}

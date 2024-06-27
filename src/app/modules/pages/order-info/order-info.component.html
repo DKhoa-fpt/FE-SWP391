@@ -2,7 +2,7 @@
 <app-my-header></app-my-header>
 <!--header start here-->
 <!--wrapper start here-->
-<div class="wrapper" style="margin-top: 7%">
+<div class="wrapper" style="margin-top: 7% " id="main-container">
   <section class="cart-page-section">
     <div class="container">
       <div class="section-title">
@@ -16,113 +16,349 @@
                   </span>
           Back to category
         </a>
-        <h2>Shopping cart<span>(125)</span></h2>
+        <h2>Order Information:<span></span></h2>
       </div>
       <div class="row">
-        <div class="col-lg-9 col-12">
+        <div class="col-lg-8 col-12">
           <div class="order-historycontent">
             <table class="cart-tble">
               <thead>
               <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Name</th>
+                <th scope="col">Product ID</th>
+<!--                <th scope="col">Name</th>-->
                 <th scope="col">date</th>
                 <th scope="col">quantity</th>
                 <th scope="col" style="text-align:left;">Price</th>
                 <th scope="col">Total</th>
-                <th scope="col"><div class="custom-control custom-checkbox">
-                  <input class="custom-control-input" type="checkbox" id="customCheckbox1" (click)="clickSelectAll()" [(ngModel)] = "isSelectAll">
-                  <label for="customCheckbox1" class="custom-control-label">Select ALL</label>
-                </div></th>
+<!--                <th scope="col"><div class="custom-control custom-checkbox">-->
+<!--                  <input class="custom-control-input" type="checkbox" id="customCheckbox1" (click)="clickSelectAll()" [(ngModel)] = "isSelectAll">-->
+<!--                  <label for="customCheckbox1" class="custom-control-label">Select ALL</label>-->
+<!--                </div></th>-->
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor = "let item of lisProductsCart">
+              <tr *ngFor = "let item of order?.orderDetails">
                 <td data-label="Product">
-                  <a href="/product?id={{item.id_jewelry}}">
-                    <img src="assets/images/cart1.png" />
+                  <a href="/product?id={{item.jewelryId}}">
+                    {{item.jewelryId}}
                   </a>
                 </td>
-                <td data-label="Name">
-                  <a href="/product?id={{item.id_jewelry}}">best jewellery collections</a>
-                  <div class="product-option">
-                    <dt>Size:</dt>
-                    <dd>S</dd>
-                  </div>
-                </td>
-                <td data-label="date">11/08/22</td>
+<!--                <td data-label="Name">-->
+<!--                  <a href="/product?id={{item.jewelryId}}">best jewellery collections</a>-->
+<!--                  <div class="product-option">-->
+<!--                    <dt>Size:</dt>-->
+<!--                    <dd>S</dd>-->
+<!--                  </div>-->
+<!--                </td>-->
+                <td data-label="date">{{item.orderDate |date:'dd/MM/yyyy'}}</td>
                 <td data-label="quantity">
-                  <div class="qty-spinner">
-                    <button type="button" class="quantity-decrement" (click)="addProductCart(item,-1)">
-                      <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0.251343V1.74871H12V0.251343H0Z" fill="#61AFB3"></path>
-                      </svg>
-                    </button>
-                    <input type="text" class="quantity" data-cke-saved-name="quantity" value="{{item.quantity_number}}"
-                           min="01" max="100" />
-                    <button type="button" class="quantity-increment" (click)="addProductCart(item,1)">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M6.74868 5.25132V0H5.25132V5.25132H0V6.74868H5.25132V12H6.74868V6.74868H12V5.25132H6.74868Z"
-                          fill="#61AFB3"></path>
-                      </svg>
-                    </button>
-                  </div>
+<!--                  <div class="qty-spinner">-->
+<!--                    <button type="button" class="quantity-decrement" (click)="addProductCart(item,-1)">-->
+<!--                      <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <path d="M0 0.251343V1.74871H12V0.251343H0Z" fill="#61AFB3"></path>-->
+<!--                      </svg>-->
+<!--                    </button>-->
+<!--                    <input type="text" class="quantity" data-cke-saved-name="quantity" value="{{item.quantityNumber}}"-->
+<!--                           min="01" max="100" />-->
+<!--                    <button type="button" class="quantity-increment" (click)="addProductCart(item,1)">-->
+<!--                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <path-->
+<!--                          d="M6.74868 5.25132V0H5.25132V5.25132H0V6.74868H5.25132V12H6.74868V6.74868H12V5.25132H6.74868Z"-->
+<!--                          fill="#61AFB3"></path>-->
+<!--                      </svg>-->
+<!--                    </button>-->
+<!--                    </button>-->
+<!--                  </div>-->
+                  {{item.quantityNumber}}
                 </td>
-                <td data-label="Price">{{convertNumber(item.price_items)}} VNĐ</td>
+                <td data-label="Price">{{convertNumber(item.totalPrice/item.quantityNumber)}} VNĐ</td>
                 <td data-label="Total">
-                  {{convertNumber(item.price_items*item.quantity_number)}} VNĐ
+                  {{convertNumber(item.totalPrice)}} VNĐ
                 </td>
-                <td><div class="custom-control custom-checkbox" style="text-align: center;">
-                  <input class="custom-control-input" type="checkbox" id="{{item.id}}" [(ngModel)]="item.isChecked">
-                  <label for="{{item.id}}" class="custom-control-label">select</label>
-                  <a href="javascript:;" class="remove-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"
-                         focusable="false" role="presentation" class="icon icon-remove">
-                      <path
-                        d="M14 3h-3.53a3.07 3.07 0 00-.6-1.65C9.44.82 8.8.5 8 .5s-1.44.32-1.87.85A3.06 3.06 0 005.53 3H2a.5.5 0 000 1h1.25v10c0 .28.22.5.5.5h8.5a.5.5 0 00.5-.5V4H14a.5.5 0 000-1zM6.91 1.98c.23-.29.58-.48 1.09-.48s.85.19 1.09.48c.2.24.3.6.36 1.02h-2.9c.05-.42.17-.78.36-1.02zm4.84 11.52h-7.5V4h7.5v9.5z"
-                        fill="currentColor"></path>
-                      <path
-                        d="M6.55 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5zM9.45 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5z"
-                        fill="currentColor"></path>
-                    </svg>
-                  </a>
-                </div></td>
+<!--                <td><div class="custom-control custom-checkbox" style="text-align: center;">-->
+<!--                  <input class="custom-control-input" type="checkbox" id="{{item.id}}" [(ngModel)]="item.isChecked">-->
+<!--                  <label for="{{item.id}}" class="custom-control-label">select</label>-->
+<!--                  <a href="javascript:;" class="remove-btn">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"-->
+<!--                         focusable="false" role="presentation" class="icon icon-remove">-->
+<!--                      <path-->
+<!--                        d="M14 3h-3.53a3.07 3.07 0 00-.6-1.65C9.44.82 8.8.5 8 .5s-1.44.32-1.87.85A3.06 3.06 0 005.53 3H2a.5.5 0 000 1h1.25v10c0 .28.22.5.5.5h8.5a.5.5 0 00.5-.5V4H14a.5.5 0 000-1zM6.91 1.98c.23-.29.58-.48 1.09-.48s.85.19 1.09.48c.2.24.3.6.36 1.02h-2.9c.05-.42.17-.78.36-1.02zm4.84 11.52h-7.5V4h7.5v9.5z"-->
+<!--                        fill="currentColor"></path>-->
+<!--                      <path-->
+<!--                        d="M6.55 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5zM9.45 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5z"-->
+<!--                        fill="currentColor"></path>-->
+<!--                    </svg>-->
+<!--                  </a>-->
+<!--                </div></td>-->
               </tr>
               </tbody>
             </table>
           </div>
+          <h2>Information user: </h2>
+          <form [formGroup]="form">
+            <div class="form-container">
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label>Full Name<sup aria-hidden="true">*</sup>:</label>
+                    <input formControlName="full_name" type="text" class="form-control" placeholder="John" required="">
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label>Phone Number:<sup aria-hidden="true">*</sup></label>
+                    <input type="number" formControlName="phone_number" class="form-control" placeholder="09xx" required="">
+                  </div>
+                </div>
+                <!--                <div class="col-md-6 col-12">-->
+                <!--                  <div class="form-group">-->
+                <!--                    <label>Age<sup aria-hidden="true">*</sup>:</label>-->
+                <!--                    <input formControlName="age" type="number" class="form-control" placeholder="shop@company.com" required="">-->
+                <!--                  </div>-->
+                <!--                </div>-->
+<!--                <div class="row">-->
+<!--                  &lt;!&ndash;                        <div class="col">&ndash;&gt;-->
+<!--                  <div class="form-group">-->
+<!--                    <label>Email</label>-->
+<!--                    <input [disabled]="true" formControlName="email" class="form-control" type="text" placeholder="user@example.com">-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div class="row"style="width: 100%"><label><h5>Address:</h5></label></div>-->
+
+<!--                <div class="row" style="width: 100%">-->
+<!--                  <div class="col">-->
+<!--                    <div class="form-group">-->
+<!--                      <label>Province: </label>-->
+<!--                      <input class="form-control" type="text" formControlName="province" >-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="col">-->
+<!--                    <div class="form-group">-->
+<!--                      <label>District:</label>-->
+<!--                      <input class="form-control" type="text" formControlName="district">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="col">-->
+<!--                    <div class="form-group">-->
+<!--                      <label>Hamlet:</label>-->
+<!--                      <input class="form-control" type="text" formControlName="ward">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="row" style="width: 100%">
+                  <div class="col">
+                    <div class="form-group">
+                      <label>Specific address:</label>
+                      <input class="form-control" type="text" formControlName="extra" placeholder="Số nhà...">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--            <div class="form-container">-->
+            <!--              <div class="d-flex acc-back-btn-wrp align-items-center justify-content-end">-->
+            <!--                <button class="btn-secondary back-btn-acc" type="submit">-->
+            <!--                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="14" viewBox="0 0 35 14" fill="none">-->
+            <!--                    <path d="M25.0749 14L35 7L25.0805 0L29.12 6.06667H0V7.93333H29.12L25.0749 14Z"></path>-->
+            <!--                  </svg>-->
+            <!--                  Back-->
+            <!--                </button>-->
+            <!--                <button class="btn continue-btn" type="submit" (click)="onUpdate()">-->
+            <!--                  Save Changes-->
+            <!--                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="14" viewBox="0 0 35 14" fill="none">-->
+            <!--                    <path d="M25.0749 14L35 7L25.0805 0L29.12 6.06667H0V7.93333H29.12L25.0749 14Z"></path>-->
+            <!--                  </svg>-->
+            <!--                </button>-->
+            <!--              </div>-->
+            <!--            </div>-->
+          </form>
         </div>
-        <div class="col-lg-3 col-12">
+        <div class="col-lg-4 col-12">
           <div class="cart-summery">
             <ul>
               <li>
-                <span class="cart-sum-left">1 item</span>
-                <span class="cart-sum-right">$48.00</span>
+                <span class="cart-sum-left">{{totalItem}} item</span>
+                <span class="cart-sum-right">{{convertNumber(totalResultPrice)}} VNĐ</span>
+              </li>
+              <li *ngIf="voucher">
+                <span class="cart-sum-left">Discount percent</span>
+                <span class="cart-sum-right">{{voucher.discountPercent}} %</span>
+              </li>
+              <li *ngIf="voucher">
+                <span class="cart-sum-left">Discount</span>
+                <span class="cart-sum-right">{{convertNumber(totalDiscount)}} VNĐ</span>
               </li>
               <li>
-                <span class="cart-sum-left">Shipping</span>
-                <span class="cart-sum-right">$7.00</span>
+                <span class="cart-sum-left">Total</span>
+                <span class="cart-sum-right">{{convertNumber(totalFinally)}} VNĐ</span>
+              </li>
+<!--              <li>-->
+<!--                <span class="cart-sum-left">Total (tax excl.)</span>-->
+<!--                <span class="cart-sum-right"> $55.00</span>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <span class="cart-sum-left">Total (tax incl.)</span>-->
+<!--                <span class="cart-sum-right"> $55.00</span>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <span class="cart-sum-left">Taxes: </span>-->
+<!--                <span class="cart-sum-right"> $0.00</span>-->
+<!--              </li>-->
+              <li>
+                <span class="cart-sum-left">Add voucher </span>
+                <span class="cart-sum-right"> <a (click)="onOpenModal('voucher')" style="color: #05a">Choose or Enter</a></span>
               </li>
               <li>
-                <span class="cart-sum-left">Total (tax excl.)</span>
-                <span class="cart-sum-right"> $55.00</span>
+                <span class="cart-sum-left">View information address </span>
+                <span class="cart-sum-right"> <a (click)="onOpenModal('informationCustomerModal')" style="color: #05a">Click here</a></span>
               </li>
               <li>
-                <span class="cart-sum-left">Total (tax incl.)</span>
-                <span class="cart-sum-right"> $55.00</span>
+                <span class="cart-sum-left">Type of Payment: </span>
+                <div class = "row" style="margin-left: 15%">
+                  <span class="cart-sum-right"> <input class="custom-control-input" value="vnpay" type="radio" id="customRadio1" name="customRadio" (change)="selectedPayment = 'vnpay'">
+                      <label for="customRadio1" class="custom-control-label">Payment with Vnpay</label></span>
+                  <span class="cart-sum-right" >
+                  <input class="custom-control-input" type="radio" value="stripe" id="customRadio2" name="customRadio" (change)="selectedPayment = 'stripe'" checked>
+                      <label for="customRadio2" class="custom-control-label">Payment with Stripe</label>
+                </span>
+                </div>
               </li>
-              <li>
-                <span class="cart-sum-left">Taxes: </span>
-                <span class="cart-sum-right"> $0.00</span>
+              <li style="text-align: right;">
+                <button style="width: 50%;text-align: center;margin-left: 25%" class="btn checkout-btn" (click)="callPayment(order)">Checkout</button>
               </li>
             </ul>
-            <button class="btn checkout-btn">Proceed to checkout</button>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <div class="modal fade" id="addVoucherModal" tabindex="-1" role="dialog" aria-labelledby="addVoucherModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addVoucherModalLabel">Add Voucher</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddVoucher(addForm)">
+            <div class="form-group">
+              <label for="code">Enter Voucher Code: </label>
+              <input type="text" ngModel name="code" class="form-control" id="code" placeholder="code" required>
+            </div>
+            <button (click)="checkVoucher(addForm)">Check</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="informationCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addVoucherModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="informationCustomerModalLabel">Information user</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form">
+            <div class="form-container">
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label>Full Name<sup aria-hidden="true">*</sup>:</label>
+                    <input formControlName="full_name" type="text" class="form-control" placeholder="John" required="">
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label>Phone Number:<sup aria-hidden="true">*</sup>:</label>
+                    <input type="number" formControlName="phone_number" class="form-control" placeholder="09xx" required="">
+                  </div>
+                </div>
+<!--                <div class="col-md-6 col-12">-->
+<!--                  <div class="form-group">-->
+<!--                    <label>Age<sup aria-hidden="true">*</sup>:</label>-->
+<!--                    <input formControlName="age" type="number" class="form-control" placeholder="shop@company.com" required="">-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label>Date of Birth<sup aria-hidden="true">*</sup>:</label>
+                    <input type="text" formControlName="date_of_birth" class="form-control" placeholder="1234567890" required="">
+                  </div>
+                </div>
+                <div class="row">
+                  <!--                        <div class="col">-->
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input [disabled]="true" formControlName="email" class="form-control" type="text" placeholder="user@example.com">
+                  </div>
+                  <!--                        </div>-->
+                </div>
+                <div class="row"style="width: 100%"><label><h5>Address:</h5></label></div>
+
+                <div class="row" style="width: 100%">
+                  <div class="col">
+                    <div class="form-group">
+                      <label>Province: </label>
+                      <input class="form-control" type="text" formControlName="province" >
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label>District:</label>
+                      <input class="form-control" type="text" formControlName="district">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label>Hamlet:</label>
+                      <input class="form-control" type="text" formControlName="ward">
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="width: 100%">
+                  <div class="col">
+                    <div class="form-group">
+                      <label>Specific address:</label>
+                      <input class="form-control" type="text" formControlName="extra" placeholder="Số nhà...">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+<!--            <div class="form-container">-->
+<!--              <div class="d-flex acc-back-btn-wrp align-items-center justify-content-end">-->
+<!--                <button class="btn-secondary back-btn-acc" type="submit">-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="14" viewBox="0 0 35 14" fill="none">-->
+<!--                    <path d="M25.0749 14L35 7L25.0805 0L29.12 6.06667H0V7.93333H29.12L25.0749 14Z"></path>-->
+<!--                  </svg>-->
+<!--                  Back-->
+<!--                </button>-->
+<!--                <button class="btn continue-btn" type="submit" (click)="onUpdate()">-->
+<!--                  Save Changes-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="14" viewBox="0 0 35 14" fill="none">-->
+<!--                    <path d="M25.0749 14L35 7L25.0805 0L29.12 6.06667H0V7.93333H29.12L25.0749 14Z"></path>-->
+<!--                  </svg>-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </div>-->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="closeInformationCustomerModal" data-dismiss="modal" class="btn btn-secondary">Close</button>
+<!--          <button (click)="validateInformationUser()"> Done</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!---wrapper end here-->
 <!--footer start here-->

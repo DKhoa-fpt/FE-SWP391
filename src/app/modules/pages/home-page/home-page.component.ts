@@ -46,6 +46,9 @@ export class HomePageComponent {
       });
     } else {
       this.isLoginUser = localStorage.getItem("user") != null;
+      if(this.isLoginUser) {
+        this.getProductCart();
+      }
     }
     this.getProducts();
   }
@@ -64,7 +67,7 @@ export class HomePageComponent {
     return this.numberFormat.convertNumber(number);
   }
   goToProductDetail(id:number) {
-    const returnUrl = this.route.snapshot.queryParams[`/ecommerce?id=${id}`] || `/ecommerce?id=${id}`;
+    const returnUrl = this.route.snapshot.queryParams[`/product?id=${id}`] || `/product?id=${id}`;
     this.router.navigateByUrl(returnUrl);
   }
 
@@ -100,31 +103,31 @@ export class HomePageComponent {
       }
   getProductCart() {
     const request = {
-      customer_id : 1
+      customer_id : null
     }
     this.cartService.getProductInCart(request).subscribe((res) =>{
       this.cartService.cartItems.next(res?.data);
       this.cartService.totalProductInCart.next(this.cartService.getTotalProduct(res?.data));
-      this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
+      // this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
     }, error => {
 
     })
   }
   getProductCartV2(token:any) {
     const request = {
-      customer_id : 1
+      customer_id : null
     }
     this.cartService.getProductInCartV2(request,token).subscribe((res) =>{
       this.cartService.cartItems.next(res?.data);
       this.cartService.totalProductInCart.next(this.cartService.getTotalProduct(res?.data));
-      this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
+      // this.cartService.totalPrice.next(this.cartService.getTotalPriceV2(res?.data));
     }, error => {
 
     })
   }
   addProductCart(product:any){
     if(!this.isLoginUser) {
-      this.toastrService.error("Bạn phải đăng nhập trước");
+      this.toastrService.error("You are login first");
       return;
     }
     const request = {
@@ -132,10 +135,10 @@ export class HomePageComponent {
       quantity : 1
     }
     this.cartService.addProductToCard(request).subscribe((res) =>{
-      this.toastrService.success("Add sản phầm thành công");
+      this.toastrService.success("Add product to cart success");
       this.getProductCart();
     }, error => {
-      this.toastrService.error("Add sản phầm thất bại");
+      this.toastrService.error("Add product to cart fail");
     });
   }
 
